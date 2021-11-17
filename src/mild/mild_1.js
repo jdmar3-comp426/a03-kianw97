@@ -82,7 +82,7 @@ export function countArray(array) {
     }
 
     for(let x = 0; x < arr.length; x++) {
-        ret[arr[x]] = mappy.get(arr[i]);
+        ret[arr[x]] = mappy.get(arr[x]);
     }
 
     return ret;
