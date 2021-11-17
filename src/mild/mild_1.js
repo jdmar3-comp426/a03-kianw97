@@ -47,7 +47,7 @@ export function maxAndMin(numbers) {
     let max = -9999999;
     let ret = new Object();
 
-    for(let x = 0; x < length; x++) {
+    /*for(let x = 0; x < length; x++) {
         if(numbers[x] < min) {
             min = numbers[x];
         }
@@ -55,7 +55,10 @@ export function maxAndMin(numbers) {
         if(numbers[x] > max) {
             max = numbers[x];
         }
-    }
+    }*/
+
+    max = Math.max(...numbers);
+    min = Math.min(...numbers);
 
     ret.max = max;
     ret.min = min;
