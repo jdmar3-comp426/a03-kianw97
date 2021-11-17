@@ -65,7 +65,7 @@ export function maxAndMin(numbers) {
  */
 export function countArray(array) {
     let mappy = new Map();
-    const arr = [];
+    let arr = [];
     let ret = new Object();
 
     for(let i = 0; i < array.length; i++) {
@@ -74,8 +74,8 @@ export function countArray(array) {
             val++;
             mappy.set(array[i], val);
         } else {
-            let val = 1;
-            mappy.set(array[i], val);
+            let newVal = 1;
+            mappy.set(array[i], newVal);
             arr[arr.length] = array[i];
         }
     }
