@@ -67,16 +67,17 @@ export function countArray(array) {
     let mappy = new Map();
     let arr = [];
     let ret = new Object();
+    let val = 0;
 
     for(let i = 0; i < array.length; i++) {
         if(mappy.has(array[i])) {
-            let val = mappy.get(array[i]);
+            val = mappy.get(array[i]);
             val++;
             mappy.set(array[i], val);
         } else {
-            let newVal = 1;
-            mappy.set(array[i], newVal);
-            arr[arr.length] = array[i];
+            val = 1;
+            mappy.set(array[i], val);
+            arr.push(array[i]);
         }
     }
 
