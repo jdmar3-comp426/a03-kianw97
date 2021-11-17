@@ -42,20 +42,7 @@ export function getIncreasingArray(startNumber, endNumber) {
  * and https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
  */
 export function maxAndMin(numbers) {
-    let length = numbers.length;
-    let min = 99999999;
-    let max = -9999999;
     let ret = new Object();
-
-    /*for(let x = 0; x < length; x++) {
-        if(numbers[x] < min) {
-            min = numbers[x];
-        }
-
-        if(numbers[x] > max) {
-            max = numbers[x];
-        }
-    }*/
 
     max = Math.max(...numbers);
     min = Math.min(...numbers);
@@ -77,6 +64,25 @@ export function maxAndMin(numbers) {
  *
  */
 export function countArray(array) {
-    let ret = new Map();
+    let mappy = new Map();
+    const arr = [];
+    let ret = new Object();
 
+    for(let i = 0; i < array.length; i++) {
+        if(mappy.has(array[i])) {
+            let val = mappy.get(array[i]);
+            val++;
+            mappy.set(array[i], val);
+        } else {
+            let val = 1;
+            mappy.set(array[i], val);
+            arr[arr.length] = array[i];
+        }
+    }
+
+    for(let x = 0; x < arr.length; x++) {
+        ret[arr[x]] = mappy.get(arr[i]);
+    }
+
+    return ret;
 }
