@@ -27,7 +27,7 @@ export function sumToString(a, b) {
 export function getIncreasingArray(startNumber, endNumber) {
     const ret = [];
     let index = 0;
-    for(startNumber; startNumber < endNumber; startNumber++) {
+    for(startNumber; startNumber <= endNumber; startNumber++) {
         ret[index] = startNumber;
         index++;
     }
@@ -47,7 +47,7 @@ export function maxAndMin(numbers) {
     let max = -9999999;
     let ret = new Object();
 
-    for(x = 0; x < length; x++) {
+    for(let x = 0; x < length; x++) {
         if(numbers[x] < min) {
             min = numbers[x];
         }
