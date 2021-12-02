@@ -45,6 +45,8 @@ export function identifyVariable(variable) {
 
  */
 export function identifyArray(array) {
+let temp = new Object();
+
    for (let i = 0; i < array.length; i++) {
       array[i] = identifyVariable(array[i]);
    }
