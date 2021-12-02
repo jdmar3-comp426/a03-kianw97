@@ -28,7 +28,7 @@ export function getMedian(array) {
     if(middle % 1) {
         return array[middle - 0.5];
     } else {
-        return (array[mid - 1] + array[mid]) / 2;
+        return (array[middle - 1] + array[middle]) / 2;
     }
 }
 
