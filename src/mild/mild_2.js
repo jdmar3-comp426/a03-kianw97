@@ -8,21 +8,21 @@
 export function identifyVariable(variable) {
    let ret = new Object();
 
-   if (typeof varibale == 'undefined') {
+   if (typeof variable == 'undefined') {
       ret.type = 'undefined';
-   } else if (typeof varibale == 'object') {
+   } else if (typeof variable == 'object') {
       ret.type = 'object';
-   } else if (typeof varibale == 'boolean') {
+   } else if (typeof variable == 'boolean') {
       ret.type = 'boolean';
-   } else if (typeof varibale == 'number')  {
+   } else if (typeof variable == 'number')  {
       ret.type = 'number';
-   } else if (typeof varibale == 'string') {
+   } else if (typeof variable == 'string') {
       ret.type = 'string';
-   } else if (typeof varibale == 'function') {
+   } else if (typeof variable == 'function') {
       ret.type = 'function';
-   } else if (typeof varibale == 'symbol') {
+   } else if (typeof variable == 'symbol') {
       ret.type = 'symbol';
-   } else if (typeof varibale == 'bigint') {
+   } else if (typeof variable == 'bigint') {
       ret.type = 'bigint';
    } 
 
