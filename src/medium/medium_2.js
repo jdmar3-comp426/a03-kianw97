@@ -20,44 +20,12 @@ see under the methods section
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
 export const allCarStats = {
-    get avgMpg() {
-        let ret = [];
-        let totalCity = 0;
-        let totalHighway = 0;
-
-        for (let i = 0; i < mpg_data.length; i++) {
-            totalCity += mpg_data[i]['city_mpg'];
-            totalHighway += mpg_data[i]['highway_mpg'];
-        }
-
-        const avgCity = totalCity/mpg_data.length;
-        const avgHigh = totalHighway/mpg_data.length;
-        ret['city'] = avgCity;
-        ret['highway'] = avgHigh;
-        return ret;
+    avgMpg: {
+        city: mpg_data.map(e=>e.city_mpg).reduce((a, b) => {return a+b})/len,
+        highway: mpg_data.map(e=>e.highway_mpg).reduce((a, b) => {return a+b})/len
     },
-
-    get allYearStats() {
-        let years = [];
-        for (let i = 0; i < mpg_date.length; i++) {
-            years.push(mpg.data[i]['year']);
-        }
-        const result = getStatistics(years);
-        return result;
-    },
-
-    get ratioHybrids() {
-        let hybrid = 0;
-        let nonHybrid = 0;
-        for (let i = 0; i < mpg_data.length; i++) {
-            if (mpg_data[i]['hybrid'] == true) {
-                hybrid++;
-            } else {
-                nonHybrid++;
-            }
-        }
-        return hybrid/(nonHybrid + hybrid);
-    },
+    allYearStats: getStatistics(mpg_data.map(a=>a.year)),
+    ratioHybrids: mpg_data.map(a=>a.hybrid).filter(Boolean).length/mpg_data.length,
 };
 
 
