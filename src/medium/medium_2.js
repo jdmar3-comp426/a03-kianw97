@@ -109,63 +109,86 @@ export const allCarStats = {
  *
  * }
  */
-export const moreStats = {
-    get makerHybrids() {
-        let result = [];
-        let makes = [];
-        for (let i = 0; i < mpg_data.length; i++) {
-            if (!makes.includes(mpg_data[i]['make']) && mpg_data[i]['hybrid']) {
-                makes.push(mpg_data[i]['make']);
-            }
+let hybrid2009 = [];
+let notHybrid2009 = [];
+let hybrid2010 = [];
+let notHybrid2010 = [];
+let hybrid2011 = [];
+let notHybrid2011 = [];
+let hybrid2012 = [];
+let notHybrid2012 = [];
+
+for (let i = 0; i < mpg_data.length; i++) {
+    if (mpg_data[i].hybrid) {
+        if (mpg_data[i].year == 2009) {
+            hybrid2009.push(mpg_data[i]);
         }
-        for (let i = 0; i < makes.length; i++) {
-            for(let j = 0; j < mpg_data.length; j++) {
-                if (mpg_data[j]['make'] == makes[i] && mpg_data[j]['hybrid']) {
-                    arrr.push(mpg_data[j]['id']);
-                }
-            }   
-            same['hybrids'] = arrr;
-            result.push(same);
+        if (mpg_data[i].year == 2010) {
+            hybrid2010.push(mpg_data[i]);
         }
-        return result;
-    },
-    
-    get avgMpgByYearAndHybrid() {
-        let result = [];
-        let yrs = [];
-        for (let i = 0; i < mpg_data.length; i++) {
-            if (!yrs.includes(mpg_data[i]['year'])) {
-                yrs.push(mpg_data[i]['year']);
-            }
+        if (mpg_data[i].year == 2011) {
+            hybrid2011.push(mpg_data[i]);
         }
-        for (let i = 0; i < yrs.length; i++) {
-            result[yrs[i]] = {};
-            let hyb_data = 0;
-            let non_data = 0;
-            let hyb_city = 0;
-            let non_city = 0;
-            let hyb_high = 0;
-            let non_high = 0;
-            let count = 0;
-            let count2 = 0;
-            for (let j = 0; j < mpg_data.length; j++) {
-                if(mpg_data[j]['year'] == yrs[i] && mpg_data[j]['hybrid']) {
-                    hyb_city += mpg_data[j]['city_mpg'];
-                    hyb_high += mpg_data[j]['highway_mpg'];
-                    count++;
-                } else if (mpg_data[j]['year'] == yrs[i] && !mpg_data[j]['hybrid']) {
-                    non_city += mpg_data[j]['city_mpg'];
-                    non_high += mpg_data[j]['highway_mpg'];
-                    count2++;
-                }
-            }
-            hyb_data.city = hyb_city/count;
-            hyb_data.highway = hyb_high/count;
-            non_data.city = non_city/count2;
-            non_data.highway = non_high/count2;
-            result[yrs[i]]['hybrid'] = hyb_data;
-            result[yrs[i]]['notHybrid'] = non_data;
+        if (mpg_data[i].year == 2012) {
+            hybrid2012.push(mpg_data[i]);
         }
-        return result;
+    } else {
+        if (mpg_data[i].year == 2009) {
+            notHybrid2009.push(mpg_data[i]);
+        }
+        if (mpg_data[i].year == 2010) {
+            notHybrid2010.push(mpg_data[i]);
+        }
+        if (mpg_data[i].year == 2011) {
+            notHybrid2011.push(mpg_data[i]);
+        }
+        if (mpg_data[i].year == 2012) {
+            notHybrid2012.push(mpg_data[i]);
+        }
     }
+}
+
+const avgCityHwyMpg = (list) => {
+    let sumCityMpg = 0;
+    let sumHwyMpg = 0;
+    let len = list.length;
+    for (let i = 0; i < list.length; i++) {
+        sumCityMpg = sumCityMpg + list[i].city_mpg;
+        sumHwyMpg = sumHwyMpg + list[i].highway_mpg;
+    }
+    let avgMpgCity = sumCityMpg / len;
+    let avgMpgHwy = sumHwyMpg / len;
+    return {
+        city : avgMpgCity,
+        highway : avgMpgHwy
+    };
+}
+
+const yearHybridNotHybrid = (yearHybrid, yearNotHybrid) => {
+    return {
+        hybrid : avgCityHwyMpg(yearHybrid),
+        notHybrid : avgCityHwyMpg(yearNotHybrid)
+    };
+
+}
+
+
+let stats2009 = yearHybridNotHybrid(hybrid2009, notHybrid2009);
+let stats2010 = yearHybridNotHybrid(hybrid2010, notHybrid2010);
+let stats2011 = yearHybridNotHybrid(hybrid2011, notHybrid2011);
+let stats2012 = yearHybridNotHybrid(hybrid2012, notHybrid2012);
+
+
+const carFinale = {
+    2009: stats2009,
+    2010: stats2010,
+    2011: stats2011,
+    2012: stats2012
+};
+
+
+
+export const moreStats = {
+    makerHybrids: {},
+    avgMpgByYearAndHybrid: carFinale
 };
