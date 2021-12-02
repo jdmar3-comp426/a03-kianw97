@@ -108,7 +108,7 @@ export function searchByYear(car_data, years) {
     }
     ret.sort(
         function (firstOne, SecondOne) {
-            return SecondOne.year - firstOne.year
+            return SecondOne.year - firstOne.year;
         }
     )
     return returningArray;
