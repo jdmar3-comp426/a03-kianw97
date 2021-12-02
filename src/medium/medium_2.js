@@ -20,9 +20,44 @@ see under the methods section
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
 export const allCarStats = {
-    avgMpg: undefined,
-    allYearStats: undefined,
-    ratioHybrids: undefined,
+    get avgMpg() {
+        let ret = [];
+        let totalCity = 0;
+        let totalHighway = 0;
+
+        for (let i = 0; i < mpg_data.length; i++) {
+            totalCity += mpg_data[i]['city_mpg'];
+            totalHighway += mpg_data[i]['highway_mpg'];
+        }
+
+        const avgCity = totalCity/mpg_data.length;
+        const avgHigh = totalHighway/mpg_data.length;
+        ret['city'] = avgCity;
+        ret['highway'] = avgHigh;
+        return ret;
+    },
+
+    get allYearStats() {
+        let years = [];
+        for (let i = 0; i < mpg_date.length; i++) {
+            years.push(mpg.data[i]['year']);
+        }
+        const result = getStatistics(years);
+        return result;
+    },
+
+    get ratioHybrids() {
+        let hybrid = 0;
+        let nonHybrid = 0;
+        for (let i = 0; i < mpg_data.length; i++) {
+            if (mpg_data[i]['hybrid'] == true) {
+                hybrid++;
+            } else {
+                nonHybrid++;
+            }
+        }
+        return hybrid/(nonHybrid + hybrid);
+    },
 };
 
 
@@ -84,6 +119,62 @@ export const allCarStats = {
  * }
  */
 export const moreStats = {
-    makerHybrids: undefined,
-    avgMpgByYearAndHybrid: undefined
+    get makerHybrids() {
+        let result = [];
+        let makes = [];
+        for (let i = 0; i < mpg_data.length; i++) {
+            if (!makes.includes(mpg_data[i]['make']) && mpg_data[i]['hybrid']) {
+                makes.push(mpg_data[i]['make']);
+            }
+        }
+        for (let i = 0; i < makes.length; i++) {
+            for(let j = 0; j < mpg_data.length; j++) {
+                if (mpg_data[j]['make'] == makes[i] && mpg_data[j]['hybrid']) {
+                    arrr.push(mpg_data[j]['id']);
+                }
+            }   
+            same['hybrids'] = arrr;
+            result.push(same);
+        }
+        return result;
+    },
+    
+    get avgMpgByYearAndHybrid() {
+        let result = [];
+        let yrs = [];
+        for (let i = 0; i < mpg_data.length; i++) {
+            if (!yrs.includes(mpg_data[i]['year'])) {
+                yrs.push(mpg_data[i]['year']);
+            }
+        }
+        for (let i = 0; i < yrs.length; i++) {
+            result[yrs[i]] = {};
+            let hyb_data = 0;
+            let non_data = 0;
+            let hyb_city = 0;
+            let non_city = 0;
+            let hyb_high = 0;
+            let non_high = 0;
+            let count = 0;
+            let count2 = 0;
+            for (let j = 0; j < mpg_data.length; j++) {
+                if(mpg_data[j]['year'] == yrs[i] && mpg_data[j]['hybrid']) {
+                    hyb_city += mpg_data[j]['city_mpg'];
+                    hyb_high += mpg_data[j]['highway_mpg'];
+                    count++;
+                } else if (mpg_data[j]['year'] == yrs[i] && !mpg_data[j]['hybrid']) {
+                    non_city += mpg_data[j]['city_mpg'];
+                    non_high += mpg_data[j]['highway_mpg'];
+                    count2++;
+                }
+            }
+            hyb_data.city = hyb_city/count;
+            hyb_data.highway = hyb_high/count;
+            non_data.city = non_city/count2;
+            non_data.highway = non_high/count2;
+            result[yrs[i]]['hybrid'] = hyb_data;
+            result[yrs[i]]['notHybrid'] = non_data;
+        }
+        return result;
+    }
 };
