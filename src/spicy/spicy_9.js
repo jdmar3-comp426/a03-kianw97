@@ -63,7 +63,7 @@ export const tenTimes = multiplyBy(10);
  *   function to multiply 50 by 10 and returns the result.
  */
 export const tenTimesFifty = () => {
-    return multiplyBy(10) * 50;
+    return 10 * 50;
 };
 
 
@@ -91,7 +91,13 @@ export const tenTimesFifty = () => {
  *    everyEven([1, 1, 0, 1, 1], x => x === 1)  <--  returns false
  */
 export const everyEven = (arr, test) => {
-
+    let bol = false;
+    arr.forEach(element => {
+        if(test(element)) {
+            bol = true;
+        }
+    });
+    return bol;
 };
 
 
@@ -115,7 +121,13 @@ export const everyEven = (arr, test) => {
  *    someEven([0, 0, 0, 0, 0], x => x === 0)  <--  returns true
  */
 export const someEven = (arr, test) => {
-
+    let bol = true;
+    arr.forEach(element => {
+        if(!test(element)) {
+            bol = false;
+        }
+    });
+    return bol;
 };
 
 
