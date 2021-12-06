@@ -18,7 +18,21 @@ queries.
  *
  */
 export function searchHighPower(car_data, minHorsepower, minTorque) {
+    let ret = []
 
+    for (let i = 0; i < car_data.length; i++) {
+        if (car_data[i].horsepower >= minHorsepower) {
+            if (car_data[i].torque >= minTorque) {
+                ret.push(car_data[i])
+            }
+        }
+    }
+    ret.sort(
+        function (firstOne, SecondOne) {
+            return SecondOne.horsepower - firstOne.horsepower
+        }
+    )
+    return ret;
 }
 
 
@@ -33,7 +47,21 @@ export function searchHighPower(car_data, minHorsepower, minTorque) {
  *
  */
 export function searchMpg(car_data, minCity, minHighway) {
+    let ret = []
 
+    for (let i = 0; i < car_data.length; i++) {
+        if (car_data[i].highway_mpg >= minHighway) {
+            if (car_data[i].city_mpg >= minCity) {
+                ret.push(car_data[i])
+            }
+        }
+    }
+    ret.sort(
+        function (firstOne, SecondOne) {
+            return SecondOne.highway_mpg - firstOne.highway_mpg
+        }
+    )
+    return ret;
 }
 
 
@@ -46,7 +74,19 @@ export function searchMpg(car_data, minCity, minHighway) {
  * @returns {[]} array of cars
  */
 export function searchName(car_data, searchTerm) {
+    let ret = []
 
+    for (let i = 0; i < car_data.length; i++) {
+        if (car_data[i].id.includes(searchTerm)) {
+            ret.push(car_data[i])
+        }
+    }
+    ret.sort(
+        function (firstOne, SecondOne) {
+            return firstOne.indexOf(searchTerm) - SecondOne.indexOf(searchTerm)
+        }
+    )
+    return ret;
 }
 
 
@@ -59,5 +99,17 @@ export function searchName(car_data, searchTerm) {
  * @returns {[]} an array of car objects
  */
 export function searchByYear(car_data, years) {
+    let ret = []
 
+    for (let i = 0; i < car_data.length; i++) {
+        if (car_data[i].year in years) {
+            ret.push(car_data[i])
+        }
+    }
+    ret.sort(
+        function (firstOne, SecondOne) {
+            return SecondOne.year - firstOne.year;
+        }
+    )
+    return returningArray;
 }
